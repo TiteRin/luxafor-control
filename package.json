@@ -1,0 +1,27 @@
+{
+  "name": "luxafor-control",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "red": "ts-node src/main.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TiteRin/luxafor-control.git"
+  },
+  "keywords": [],
+  "author": "Marine LANCIEN",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TiteRin/luxafor-control/issues"
+  },
+  "homepage": "https://github.com/TiteRin/luxafor-control#readme",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "luxafor-api": "^4.0.0"
+  }
+}
