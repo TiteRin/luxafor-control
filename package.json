@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "red": "ts-node src/main.ts"
+    "red": "ts-node src/red.ts",
+    "green": "ts-node src/green.ts",
+    "off": "ts-node src/off.ts"
   },
   "repository": {
     "type": "git",
