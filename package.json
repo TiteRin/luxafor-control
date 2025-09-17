@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "bin": {
+    "luxafor-control": "dist/bin.js"
+  },
   "scripts": {
+    "build": "tsc -p tsconfig.json",
     "off": "ts-node src/off.ts",
     "available": "ts-node src/cli.ts set available",
     "dnd": "ts-node src/cli.ts set dnd",
@@ -27,6 +31,7 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
-    "luxafor-api": "^4.0.0"
+    "luxafor-api": "^4.0.0",
+    "minimist": "^1.2.8"
   }
 }
