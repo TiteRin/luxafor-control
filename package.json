@@ -4,8 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "red": "ts-node src/red.ts",
-    "green": "ts-node src/green.ts",
     "off": "ts-node src/off.ts",
     "available": "ts-node src/cli.ts set available",
     "dnd": "ts-node src/cli.ts set dnd",
