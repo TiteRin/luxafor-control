@@ -1,5 +1,5 @@
 #!/usr/bin/env ts-node
-import { setState, STATES } from "./main";
+import { setState, STATES, turnOff } from "./main";
 import { getPresenceFromUbuntu, PresenceState } from "./ubuntuDnd";
 
 const usage = () => {
@@ -49,6 +49,44 @@ async function run() {
     case "watch": {
       let last: string | undefined;
       const intervalMs = 2000;
+      let timer: NodeJS.Timeout | undefined;
+      let cleanedUp = false;
+
+      const cleanup = (code = 0) => {
+        if (cleanedUp) return;
+        cleanedUp = true;
+        if (timer) clearInterval(timer);
+        try { turnOff(); } catch {}
+        process.exit(code);
+      };
+
+      // Handle signals and unexpected exits
+      process.on("SIGINT", () => cleanup(0));
+      process.on("SIGTERM", () => cleanup(0));
+      process.on("uncaughtException", (err) => {
+        console.error("Unhandled error:", err);
+        cleanup(1);
+      });
+      process.on("exit", () => {
+        // Best effort: turn off on normal exit as well
+        if (!cleanedUp) {
+          try { turnOff(); } catch {}
+        }
+      });
+
+      // Optional interactive quit: press 'q' to quit
+      if (process.stdin.isTTY) {
+        console.log("👋 Press 'q' then Enter to quit (will turn off the flag)");
+        process.stdin.setEncoding("utf8");
+        process.stdin.resume();
+        process.stdin.on("data", (data) => {
+          const text = String(data).trim().toLowerCase();
+          if (text === "q" || text === "quit" || text === "exit") {
+            cleanup(0);
+          }
+        });
+      }
+
       console.log("👀 Watching Ubuntu DND and updating Luxafor...");
       const tick = async () => {
         try {
@@ -62,7 +100,7 @@ async function run() {
         }
       };
       await tick();
-      setInterval(tick, intervalMs);
+      timer = setInterval(tick, intervalMs);
       return; // keep process alive
     }
     default:

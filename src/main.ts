@@ -35,3 +35,17 @@ export function setState(stateName: keyof typeof STATES) {
     }
     return setColor(hex);
 }
+
+export function turnOff() {
+    try {
+        const flag: Device = device();
+        flag.off();
+        console.log("🛑 Luxafor off");
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error("❌ Impossible d'éteindre le Luxafor:", error.message);
+        } else {
+            console.error("❌ Erreur inconnue:", error);
+        }
+    }
+}
